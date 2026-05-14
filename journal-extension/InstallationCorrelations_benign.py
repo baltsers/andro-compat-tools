@@ -1,0 +1,56 @@
+from __future__ import print_function
+import pandas as pd
+import numpy as np
+import scipy.stats  as stats
+
+dfTotal = pd.read_excel('C:/Research/appcompatibilitystudy/Programs/installforSPSS_benign.xlsx', sheet_name='Total')
+#dfTotal = pd.read_excel('C:/Research/appcompatibilitystudy/androidincompat-artefact/installforSPSS.xlsx', sheet_name='Total')
+
+dfTotal_corr = pd.DataFrame() # Correlation matrix
+# df_p = pd.DataFrame()  # Matrix of p-values
+for x in dfTotal.columns:
+    for y in dfTotal.columns:
+        corr = stats.spearmanr(dfTotal[x], dfTotal[y])
+        dfTotal_corr.loc[x,y] = corr[0]
+#        df_p.loc[x,y] = corr[1]
+        
+print(dfTotal_corr)
+#print(df_p)
+
+writer1 = pd.ExcelWriter('C:/Research/appcompatibilitystudy/Programs/installCorrelations_benign20102019_Total.xlsx')
+dfTotal_corr.to_excel(writer1,'Total')
+writer1.save()
+
+
+dfabi = pd.read_excel('C:/Research/appcompatibilitystudy/Programs/installforSPSS_benign.xlsx', sheet_name='abi')
+dfabi_corr = pd.DataFrame() # Correlation matrix
+# df_p = pd.DataFrame()  # Matrix of p-values
+for x in dfabi.columns:
+    for y in dfabi.columns:
+        corr = stats.spearmanr(dfabi[x], dfabi[y])
+        dfabi_corr.loc[x,y] = corr[0]
+#        df_p.loc[x,y] = corr[1]
+        
+print(dfabi_corr)
+#print(df_p)
+
+writer2 = pd.ExcelWriter('C:/Research/appcompatibilitystudy/Programs/installCorrelations_benign20102019_abi.xlsx')
+dfabi_corr.to_excel(writer2,'abi')
+writer2.save()
+
+
+dflibrary = pd.read_excel('C:/Research/appcompatibilitystudy/Programs/installforSPSS_benign.xlsx', sheet_name='library')
+dflibrary_corr = pd.DataFrame() # Correlation matrix
+# df_p = pd.DataFrame()  # Matrix of p-values
+for x in dflibrary.columns:
+    for y in dflibrary.columns:
+        corr = stats.spearmanr(dflibrary[x], dflibrary[y])
+        dflibrary_corr.loc[x,y] = corr[0]
+#        df_p.loc[x,y] = corr[1]
+        
+print(dflibrary_corr)
+#print(df_p)
+
+writer3 = pd.ExcelWriter('C:/Research/appcompatibilitystudy/Programs/installCorrelations_benign20102019_library.xlsx')
+dflibrary_corr.to_excel(writer3,'library')
+writer3.save()
